@@ -33,10 +33,10 @@ export const login = async (req, res) => {
       const isPasswordCorrect = bcrypt.compareSync(password, user.password);
       if (isPasswordCorrect) {
         const token = createSingInToken(user._id);
-        const { firstName, lastName, email, role, fullName } = user;
+        const { _id,firstName, lastName, email, role, fullName } = user;
         res.status(200).json({
           token,
-          user: {
+          user: {_id,
             firstName,
             lastName,
             email,
