@@ -8,11 +8,11 @@ import Register from "./pages/Register";
 function App() {
   return (
     <div>
-      {/* <Home /> */}
+      <Home />
       {/* <Product/> */}
       {/* <Login/> */}
       {/* <Register/> */}
-      <Cart/>
+      {/* <Cart/> */}
     </div>
   );
 }
