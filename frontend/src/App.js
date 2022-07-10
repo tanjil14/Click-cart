@@ -10,8 +10,8 @@ function App() {
     <div>
       {/* <Home /> */}
       {/* <Product/> */}
-      <ProductList/>
-      {/* <Login/> */}
+      {/* <ProductList/> */}
+      <Login/>
       {/* <Register/> */}
       {/* <Cart/> */}
     </div>
