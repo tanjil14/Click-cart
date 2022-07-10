@@ -11,9 +11,9 @@ function App() {
       {/* <Home /> */}
       {/* <Product/> */}
       {/* <ProductList/> */}
-      <Login/>
+      {/* <Login/> */}
       {/* <Register/> */}
-      {/* <Cart/> */}
+      <Cart/>
     </div>
   );
 }
