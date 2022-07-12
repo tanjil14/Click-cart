@@ -23,3 +23,22 @@ export const updateProduct = async (req, res) => {
     res.status(500).json(error);
   }
 };
+//DELETE
+export const deleteProduct = async (req, res) => {
+  try {
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json("Product has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+//GET PRODUCT
+export const getSingleProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
