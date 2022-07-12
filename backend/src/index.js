@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import connectDb from "./db.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import productRoutes from "./routes/product.js";
 dotenv.config();
 const app = express();
 // middleware
@@ -23,7 +24,8 @@ app.get("/", (req, res, next) => {
   });
 });
 app.use("/api/auth", authRoutes);
-app.use("/api", userRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
