@@ -1,21 +1,20 @@
-import bcrypt from "bcrypt";
+import CryptoJS from "crypto-js";
 import UserModel from "../models/user.js";
-import { createSingInToken } from "../utils/createToken.js";
 export const register = async (req, res) => {
   try {
-    const { email, password, firstName, lastName } = req.body;
+    const { username, email, password } = req.body;
+    const cipherText = CryptoJS.AES.encrypt(
+      password,
+      process.env.JWT_SECRET
+    ).toString();
     const emailExist = await UserModel.findOne({ email });
     if (emailExist) {
       return res.status(400).json({ message: "User already registered!" });
     } else {
-      const salt = bcrypt.genSaltSync(10);
-      const hashed = bcrypt.hashSync(password, salt);
       const response = await UserModel.create({
-        firstName,
-        lastName,
+        username,
         email,
-        password: hashed,
-        username: Math.random().toString(),
+        password: cipherText,
       });
       return res
         .status(200)
@@ -33,16 +32,10 @@ export const login = async (req, res) => {
       const isPasswordCorrect = bcrypt.compareSync(password, user.password);
       if (isPasswordCorrect) {
         const token = createSingInToken(user._id);
-        const { _id,firstName, lastName, email, role, fullName } = user;
+        const { _id, firstName, lastName, email, role, fullName } = user;
         res.status(200).json({
           token,
-          user: {_id,
-            firstName,
-            lastName,
-            email,
-            role,
-            fullName,
-          },
+          user: { _id, firstName, lastName, email, role, fullName },
         });
       } else {
         res.status(400).json({ message: "invalid Password" });

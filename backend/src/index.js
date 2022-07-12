@@ -21,7 +21,7 @@ app.get("/", (req, res, next) => {
     message: "Hello from Server!",
   });
 });
-app.use("/api", userRoutes);
+app.use("/api/auth", userRoutes);
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
