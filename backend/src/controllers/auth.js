@@ -29,14 +29,12 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
     if (user) {
-      const isPasswordCorrect = bcrypt.compareSync(password, user.password);
+      const bytes = CryptoJS.AES.decrypt(user.password, process.env.JWT_SECRET);
+      const originalPass = bytes.toString(CryptoJS.enc.Utf8);
+      const isPasswordCorrect = password === originalPass;
       if (isPasswordCorrect) {
-        const token = createSingInToken(user._id);
-        const { _id, firstName, lastName, email, role, fullName } = user;
-        res.status(200).json({
-          token,
-          user: { _id, firstName, lastName, email, role, fullName },
-        });
+        const { password, ...others } = user._doc;
+        res.status(200).json({ password, others });
       } else {
         res.status(400).json({ message: "invalid Password" });
       }
