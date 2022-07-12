@@ -1,10 +1,11 @@
 import express from "express";
-import { deleteUser, updateUser } from "../controllers/user.js";
+import { deleteUser, updateUser,getById} from "../controllers/user.js";
 import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../utils/verifyToken.js";
 const router = express.Router();
 
 router.put("/:id", verifyTokenAndAuthorization, updateUser);
-router.delete("/:id",verifyTokenAndAuthorization,deleteUser)
+router.delete("/:id",verifyTokenAndAdmin,deleteUser)
+router.get("/find/:id",verifyTokenAndAdmin,getById)
 
 
 export default router;

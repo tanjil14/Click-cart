@@ -38,13 +38,13 @@ export const login = async (req, res) => {
         const token = jwt.sign(
           {
             id: user._id,
-            admin: user.isAdmin,
+            isAdmin: user.isAdmin,
           },
           process.env.JWT_SECRET,
           { expiresIn: "3d" }
         );
         // res.status(200).json({ others, token }); // "others":{} to prevent this use spread operator
-        res.status(200).json({ ...others, token,originalPass });
+        res.status(200).json({ ...others, token});
       } else {
         res.status(400).json({ message: "invalid Password" });
       }
