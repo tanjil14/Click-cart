@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 import jwt from "jsonwebtoken";
-import UserModel from "../models/user.js";
+import UserModel from "../models/User.js";
 export const register = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -44,7 +44,7 @@ export const login = async (req, res) => {
           { expiresIn: "3d" }
         );
         // res.status(200).json({ others, token }); // "others":{} to prevent this use spread operator
-        res.status(200).json({ ...others, token });
+        res.status(200).json({ ...others, token,originalPass });
       } else {
         res.status(400).json({ message: "invalid Password" });
       }
