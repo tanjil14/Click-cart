@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import UserModel from "../models/User.js";
 export const register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password} = req.body;
     const cipherText = CryptoJS.AES.encrypt(
       password,
       process.env.JWT_SECRET

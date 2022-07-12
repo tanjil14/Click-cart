@@ -1,8 +1,8 @@
-import User from "../models/User.js";
 import CryptoJS from "crypto-js";
-export const update = async (req, res) => {
+import User from "../models/User.js";
+export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const {password}=req.body
+  const { password } = req.body;
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       password,
@@ -18,6 +18,14 @@ export const update = async (req, res) => {
       { new: true }
     ); //prevent previous data
     res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+export const deleteUser = async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("User has been deleted...");
   } catch (error) {
     res.status(500).json(error);
   }
