@@ -3,6 +3,7 @@ import {
   allOrders,
   createOrder,
   deleteOrder,
+  monthlyIncome,
   updateOrder,
   userOrder,
 } from "../controllers/order.js";
@@ -18,4 +19,5 @@ router.put("/:id", verifyTokenAndAdmin, updateOrder);
 router.delete("/:id", verifyTokenAndAdmin, deleteOrder);
 router.get("/find/:userId", verifyTokenAndAuthorization, userOrder);
 router.get("/", verifyTokenAndAdmin, allOrders);
+router.get("/income", verifyTokenAndAdmin, monthlyIncome);
 export default router;
