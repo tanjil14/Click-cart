@@ -1,8 +1,9 @@
-import express from "express"
-import { createOrder ,updateOrder} from "../controllers/order.js";
+import express from "express";
+import { createOrder, deleteOrder, updateOrder } from "../controllers/order.js";
 import { verifyToken, verifyTokenAndAdmin } from "../utils/verifyToken.js";
-const router=express.Router()
+const router = express.Router();
 
-router.post("/",verifyToken,createOrder)
-router.put("/:id",verifyTokenAndAdmin,updateOrder)
+router.post("/", verifyToken, createOrder);
+router.put("/:id", verifyTokenAndAdmin, updateOrder);
+router.delete("/:id", verifyTokenAndAdmin, deleteOrder);
 export default router;
