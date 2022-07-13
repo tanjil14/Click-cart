@@ -1,10 +1,10 @@
-import jwt from "jsonwebtoken";
-
-export const verifyToken = (req, res, next) => {
+const jwt = require("jsonwebtoken");
+const env = require("../config/envConfig");
+const verifyToken = (req, res, next) => {
   const authHeader = req.headers.token;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, env.JWT_SECRET, (err, user) => {
       if (err) {
         res.status(403).json("Token is not valid!");
       } else {
@@ -17,11 +17,10 @@ export const verifyToken = (req, res, next) => {
   }
 };
 
-export const verifyTokenAndAuthorization = (req, res, next) => {
-    
+const verifyTokenAndAuthorization = (req, res, next) => {
   verifyToken(req, res, () => {
-    console.log(req.user)
-    console.log(req.params.id)
+    console.log(req.user);
+    console.log(req.params.id);
     if (req.user.id == req.params.id || req.user.isAdmin) {
       next();
     } else {
@@ -29,7 +28,7 @@ export const verifyTokenAndAuthorization = (req, res, next) => {
     }
   });
 };
-export const verifyTokenAndAdmin = (req, res, next) => {
+const verifyTokenAndAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isAdmin) {
       next();
@@ -37,4 +36,10 @@ export const verifyTokenAndAdmin = (req, res, next) => {
       res.status(403).json("You are not allowed to do that!");
     }
   });
+};
+
+module.exports = {
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
 };

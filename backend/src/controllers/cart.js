@@ -1,5 +1,5 @@
-import Cart from "../models/Cart.js"
-export const createCart = async (req, res) => {
+const Cart =require("../models/Cart.js");
+module.exports.createCart = async (req, res) => {
   const newCart = new Cart(req.body);
   try {
     const savedCart = await newCart.save();
@@ -8,7 +8,7 @@ export const createCart = async (req, res) => {
     res.status(500).json(err);
   }
 };
-export const updateCart = async (req, res) => {
+module.exports.updateCart = async (req, res) => {
   try {
     const updatedCart = await Cart.findByIdAndUpdate(
       req.params.id,
@@ -23,7 +23,7 @@ export const updateCart = async (req, res) => {
   }
 };
 
-export const deleteCart = async (req, res) => {
+module.exports.deleteCart = async (req, res) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     res.status(200).json("Cart has been deleted...");
@@ -32,7 +32,7 @@ export const deleteCart = async (req, res) => {
   }
 };
 
-export const getUserCart = async (req, res) => {
+module.exports.getUserCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId });
     res.status(200).json(cart);
@@ -41,7 +41,7 @@ export const getUserCart = async (req, res) => {
   }
 };
 
-export const allCart = async (req, res) => {
+module.exports.allCart = async (req, res) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);

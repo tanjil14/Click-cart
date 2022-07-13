@@ -1,6 +1,6 @@
-import Stripe from "stripe";
-const stripe = new Stripe(process.env.STRIPE_KEY);
-export const createPayment = async (req, res) => {
+const env=require("../config/envConfig")
+const stripe = require("stripe")(env.STRIPE_KEY);
+module.exports.createPayment = (req, res) => {
   stripe.charges.create(
     {
       source: req.body.tokenId,

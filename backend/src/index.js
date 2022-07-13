@@ -1,15 +1,14 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import mongoose from "mongoose";
-import connectDb from "./db.js";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/user.js";
-import productRoutes from "./routes/product.js";
-import cartRoutes from "./routes/cart.js";
-import orderRoutes from "./routes/order.js";
-import stripeRoute from "./routes/stripe.js";
-dotenv.config();
+const cors = require("cors");
+const env=require("./config/envConfig.js")
+const express = require("express");
+const mongoose = require("mongoose");
+const connectDb = require("./config/db.js");
+const authRoutes = require("./routes/auth.js");
+const userRoutes = require("./routes/user.js");
+const productRoutes = require("./routes/product.js");
+const cartRoutes = require("./routes/cart.js");
+const orderRoutes = require("./routes/order.js");
+const stripeRoute = require("./routes/stripe.js");
 const app = express();
 // middleware
 app.use(cors());
@@ -32,7 +31,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/checkout", stripeRoute);
-const port = process.env.PORT;
+const port =env.PORT || 6000
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   connectDb();

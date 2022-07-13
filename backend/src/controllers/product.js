@@ -1,5 +1,5 @@
-import Product from "../models/Product.js";
-export const createProduct = async (req, res) => {
+const Product=require("../models/Product.js");
+module.exports.createProduct = async (req, res) => {
   const newProduct = new Product(req.body);
   try {
     const savedProduct = await newProduct.save();
@@ -9,7 +9,7 @@ export const createProduct = async (req, res) => {
   }
 };
 //UPDATE
-export const updateProduct = async (req, res) => {
+module.exports.updateProduct = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -24,7 +24,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 //DELETE
-export const deleteProduct = async (req, res) => {
+module.exports.deleteProduct = async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted...");
@@ -34,7 +34,7 @@ export const deleteProduct = async (req, res) => {
 };
 
 //GET Single PRODUCT
-export const getSingleProduct = async (req, res) => {
+module.exports.getSingleProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -45,7 +45,7 @@ export const getSingleProduct = async (req, res) => {
 
 //GET PRODUCT
 
-export const allProducts=async(req,res)=>{
+module.exports.allProducts=async(req,res)=>{
   const qNew=req.query.new;
   const qCategory=req.query.category;
   try {

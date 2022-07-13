@@ -1,6 +1,6 @@
-import CryptoJS from "crypto-js";
-import User from "../models/User.js";
-export const updateUser = async (req, res) => {
+const CryptoJS = require("crypto-js");
+const User = require("../models/User.js");
+module.exports.updateUser = async (req, res) => {
   const { id } = req.params;
   const { password } = req.body;
   if (req.body.password) {
@@ -22,7 +22,7 @@ export const updateUser = async (req, res) => {
     res.status(500).json(error);
   }
 };
-export const deleteUser = async (req, res) => {
+module.exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json("User has been deleted...");
@@ -31,7 +31,7 @@ export const deleteUser = async (req, res) => {
   }
 };
 //GET USER
-export const getById = async (req, res) => {
+module.exports.getById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
@@ -41,7 +41,7 @@ export const getById = async (req, res) => {
   }
 };
 ////GET ALL USER
-export const allUsers = async (req, res) => {
+module.exports.allUsers = async (req, res) => {
   const query = req.query?.new;
   try {
     const users = query
@@ -55,13 +55,13 @@ export const allUsers = async (req, res) => {
 
 //GET USER STATS
 
-export const stats = async (req, res) => {
+module.exports.stats = async (req, res) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
   try {
     const data = await User.aggregate([
       {
-        $match: { createdAt: { $gte: lastYear } }
+        $match: { createdAt: { $gte: lastYear } },
       },
       {
         $project: {

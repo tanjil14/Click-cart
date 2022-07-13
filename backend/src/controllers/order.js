@@ -1,6 +1,6 @@
-import Order from "../models/Order.js";
+const Order=require("../models/Order.js");
 
-export const createOrder = async (req, res) => {
+module.exports.createOrder = async (req, res) => {
   const newOrder = new Order(req.body);
   try {
     const savedOrder = await newOrder.save();
@@ -10,7 +10,7 @@ export const createOrder = async (req, res) => {
   }
 };
 
-export const updateOrder = async (req, res) => {
+module.exports.updateOrder = async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
       req.params.id,
@@ -25,7 +25,7 @@ export const updateOrder = async (req, res) => {
   }
 };
 
-export const deleteOrder = async (req, res) => {
+module.exports.deleteOrder = async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);
     res.status(200).json("Order has been deleted...");
@@ -34,7 +34,7 @@ export const deleteOrder = async (req, res) => {
   }
 };
 
-export const userOrder = async (req, res) => {
+module.exports.userOrder = async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId });
     res.status(200).json(orders);
@@ -43,7 +43,7 @@ export const userOrder = async (req, res) => {
   }
 };
 
-export const allOrders = async (req, res) => {
+module.exports.allOrders = async (req, res) => {
   try {
     const orders = await Order.find();
     res.status(200).json(orders);
@@ -54,7 +54,7 @@ export const allOrders = async (req, res) => {
 
 // GET MONTHLY INCOME
 
-export const monthlyIncome = async (req, res) => {
+module.exports.monthlyIncome = async (req, res) => {
   const date = new Date();
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
   const previousMonth = new Date(date.setMonth(lastMonth.getMonth() - 1));

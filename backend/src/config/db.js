@@ -1,13 +1,13 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+const env=require("./envConfig")
 const connectDb = async () => {
   try {
-    await mongoose.connect(process.env.MONGO);
+    await mongoose.connect(env.MONGO);
     console.log("Database connected");
   } catch (error) {
     console.log(error.message);
     process.exit;
   }
-
 };
 
-export default connectDb;
+module.exports = connectDb;

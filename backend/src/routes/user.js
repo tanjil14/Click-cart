@@ -1,13 +1,21 @@
-import express from "express";
-import { deleteUser, updateUser,getById, allUsers, stats} from "../controllers/user.js";
-import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../utils/verifyToken.js";
+const express = require("express");
+const {
+  deleteUser,
+  updateUser,
+  getById,
+  allUsers,
+  stats,
+} = require("../controllers/user.js");
+const {
+  verifyTokenAndAdmin,
+  verifyTokenAndAuthorization,
+} = require("../utils/verifyToken.js");
 const router = express.Router();
 
 router.put("/:id", verifyTokenAndAuthorization, updateUser);
-router.delete("/:id",verifyTokenAndAdmin,deleteUser)
-router.get("/find/:id",verifyTokenAndAdmin,getById)
-router.get("/",verifyTokenAndAdmin,allUsers)
-router.get("/stats",verifyTokenAndAdmin,stats)
+router.delete("/:id", verifyTokenAndAdmin, deleteUser);
+router.get("/find/:id", verifyTokenAndAdmin, getById);
+router.get("/", verifyTokenAndAdmin, allUsers);
+router.get("/stats", verifyTokenAndAdmin, stats);
 
-
-export default router;
+module.exports = router;
