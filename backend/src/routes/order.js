@@ -1,6 +1,8 @@
 import express from "express"
-import { createOrder } from "../controllers/order.js";
+import { createOrder ,updateOrder} from "../controllers/order.js";
+import { verifyToken, verifyTokenAndAdmin } from "../utils/verifyToken.js";
 const router=express.Router()
 
-router.post("/",createOrder)
+router.post("/",verifyToken,createOrder)
+router.put("/:id",verifyTokenAndAdmin,updateOrder)
 export default router;
