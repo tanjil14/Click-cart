@@ -23,7 +23,6 @@ const Pay = () => {
   const onToken = (token) => {
     setStripeToken(token);
   };
-  console.log(stripeToken);
   useEffect(() => {
     const makeRequest = async () => {
       try {
@@ -34,7 +33,6 @@ const Pay = () => {
             amount: 2000,
           }
         );
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       }
