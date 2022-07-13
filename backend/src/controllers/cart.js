@@ -1,3 +1,4 @@
+import Cart from "../models/Cart.js"
 export const createCart = async (req, res) => {
   const newCart = new Cart(req.body);
   try {

@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import productRoutes from "./routes/product.js";
 import cartRoutes from "./routes/cart.js";
+import orderRoutes from "./routes/order.js";
 dotenv.config();
 const app = express();
 // middleware
@@ -28,6 +29,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
+app.use("/api/orders", orderRoutes);
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
