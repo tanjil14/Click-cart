@@ -127,7 +127,7 @@ const Product = () => {
     }
   };
   const handleClick = () => {
-    
+    //update cart
   };
   return (
     <Container>
