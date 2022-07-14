@@ -49,7 +49,7 @@ const Pay = () => {
         description="Your total is $20"
         amount={2000}
         token={onToken}
-        stripeKey="pk_test_51LKz54FEFbpEbFpcNa47xJggEnNlJOWb65hzh9YWxVoxI4pdxlPOGSbJftRsdSwCWY9JMQ4dsh1Dzesl405TRXkW00Qz6oa5CC"
+        stripeKey=""
       >
         <Button>Pay Now</Button>
       </StripeCheckout>

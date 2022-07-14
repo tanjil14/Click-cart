@@ -5,6 +5,7 @@ import Login from "../pages/Login.jsx";
 import Product from "../pages/Product.jsx";
 import ProductList from "../pages/ProductList.jsx";
 import Register from "../pages/Register.jsx";
+import Success from "../pages/Success.jsx";
 const Routing = () => {
   return (
     <BrowserRouter>
@@ -19,6 +20,7 @@ const Routing = () => {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="cart" element={<Cart />} />
+          <Route path="success" element={<Success />} />
         </Route>
       </Routes>
     </BrowserRouter>

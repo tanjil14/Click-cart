@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container=styled.div`
@@ -11,15 +12,17 @@ const Button=styled.button`
     width: 120;
     border-radius: 5;
     padding: 20px;
-    background-color: black;
+    background-color: #15e464;
     color: white;
     font-weight: 600;
     cursor: pointer;
 `
 const Success = () => {
+    const location=useLocation()
+    console.log(location.state.products)
     return (
         <Container>
-            <Button>Pay Now</Button>
+            <Button>Success</Button>
         </Container>
     );
 };
