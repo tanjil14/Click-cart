@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 const Container = styled.div`
   width: 100vw;
@@ -34,10 +37,10 @@ const Input = styled.input`
   margin: 20px 10px 0px 0px;
   padding: 10px;
 `;
-const InputCheck=styled.input`
-    width:12px ;
-    margin-right: 5px;
-`
+const InputCheck = styled.input`
+  width: 12px;
+  margin-right: 5px;
+`;
 const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
@@ -49,25 +52,76 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 `;
 const Register = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setUser((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+       await publicRequest.post("auth/register", {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+      });
+      alert("User has been created!");
+      setUser({
+        username: "",
+        email: "",
+        password: "",
+      });
+      navigate("/login");
+    } catch (error) {}
+  };
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input type="text" placeholder="name" />
-          <Input type="text" placeholder="last name" />
-          <Input type="text" placeholder="username" />
-          <Input type="email" placeholder="email" />
-          <Input type="password" placeholder="password" />
-          <Input type="password" placeholder="confirm password" />
+          <Input
+            type="text"
+            name="username"
+            value={user.username}
+            placeholder="name"
+            onChange={handleChange}
+          />
+          {/* <Input type="text" placeholder="last name" />
+          <Input type="text" placeholder="username" /> */}
+          <Input
+            type="email"
+            name="email"
+            value={user.email}
+            placeholder="email"
+            onChange={handleChange}
+          />
+          <Input
+            type="password"
+            name="password"
+            value={user.password}
+            placeholder="password"
+            onChange={handleChange}
+          />
+          {/* <Input type="password" placeholder="confirm password" /> */}
           <Agreement>
-            <InputCheck type="checkbox"/>
+            <InputCheck type="checkbox" />
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={handleClick}>CREATE</Button>
         </Form>
       </Wrapper>
     </Container>

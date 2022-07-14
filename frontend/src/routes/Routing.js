@@ -25,8 +25,8 @@ const Routing = () => {
             element={!user ? <Login /> : <Navigate to="/" />}
           />
           <Route
-            path="register"
-            element={user ? <Navigate to="/" /> : <Register />}
+            path="register" element={<Register/>}
+            // element={user ? <Navigate to="/" /> : <Register />}
           />
           <Route
             path="cart"
