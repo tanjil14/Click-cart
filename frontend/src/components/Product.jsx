@@ -3,9 +3,10 @@ import {
   SearchOutlined,
   ShoppingCartOutlined,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 const Info = styled.div`
-opacity: 0;
+  opacity: 0;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -29,8 +30,8 @@ const Container = styled.div`
   justify-content: center;
   background-color: white;
   position: relative;
-  &:hover ${Info}{
-  opacity: 1;
+  &:hover ${Info} {
+    opacity: 1;
   }
 `;
 const Circle = styled.div`
@@ -61,6 +62,7 @@ const Icon = styled.div`
   }
 `;
 const Product = ({ item }) => {
+  console.log(item._id)
   return (
     <Container>
       <Circle />
@@ -70,7 +72,9 @@ const Product = ({ item }) => {
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <SearchOutlined />
+          <Link to={`/products/find/${item._id}`}>
+            <SearchOutlined />
+          </Link>
         </Icon>
         <Icon>
           <FavoriteBorderOutlined />
