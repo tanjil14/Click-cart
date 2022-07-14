@@ -1,11 +1,13 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
+import { addProduct } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import { mobile } from "../responsive";
 
@@ -108,6 +110,7 @@ const Product = () => {
   const [size, setSize] = useState("");
   const id = location.pathname.split("/")[3];
   const [product, setProduct] = useState({});
+  const dispatch = useDispatch();
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -126,8 +129,10 @@ const Product = () => {
       setQuantity(quantity + 1);
     }
   };
+
   const handleClick = () => {
     //update cart
+    dispatch(addProduct({ ...product, quantity, color, size }));
   };
   return (
     <Container>
