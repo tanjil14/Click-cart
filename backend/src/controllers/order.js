@@ -1,4 +1,4 @@
-const Order=require("../models/Order.js");
+const Order = require("../models/Order.js");
 
 module.exports.createOrder = async (req, res) => {
   const newOrder = new Order(req.body);
@@ -55,12 +55,20 @@ module.exports.allOrders = async (req, res) => {
 // GET MONTHLY INCOME
 
 module.exports.monthlyIncome = async (req, res) => {
+  const productId = req.query.pid;
   const date = new Date();
   const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
   const previousMonth = new Date(date.setMonth(lastMonth.getMonth() - 1));
   try {
     const income = await Order.aggregate([
-      { $match: { createdAt: { $gte: previousMonth } } },
+      {
+        $match: {
+          createdAt: { $gte: previousMonth },
+          ...(productId && {
+            productId: { $elemMatch: { productId } },
+          }),
+        },
+      },
       {
         $project: {
           month: { $month: "$createdAt" },
