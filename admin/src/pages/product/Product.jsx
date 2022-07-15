@@ -1,17 +1,23 @@
-import { Link, useLocation } from "react-router-dom";
-import "./product.css";
-import Chart from "../../components/chart/Chart";
-import { productData } from "../../dummyData";
 import { Publish } from "@material-ui/icons";
-import { useSelector } from "react-redux";
 import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import Chart from "../../components/chart/Chart";
+import { updateProduct } from "../../redux/apiCalls";
 import { userRequest } from "../../requestMethods";
+import "./product.css";
 
 export default function Product() {
   const location = useLocation();
   const productId = location.pathname.split("/")[2];
   const [pStats, setPStats] = useState([]);
-
+  const [products, setProducts] = useState({});
+  const handleChange = (e) => {
+    setProducts((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+  console.log(products)
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
   );
@@ -38,9 +44,9 @@ export default function Product() {
     const getStats = async () => {
       try {
         const res = await userRequest.get("orders/income?pid=" + productId);
-        const list = res.data.sort((a,b)=>{
-            return a._id - b._id
-        })
+        const list = res.data.sort((a, b) => {
+          return a._id - b._id;
+        });
         list.map((item) =>
           setPStats((prev) => [
             ...prev,
@@ -53,7 +59,11 @@ export default function Product() {
     };
     getStats();
   }, [productId, MONTHS]);
-
+  const dispatch = useDispatch();
+  const handleClick = (e) => {
+    e.preventDefault();
+    // updateProduct(productId, products, dispatch);
+  };
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -91,13 +101,28 @@ export default function Product() {
         <form className="productForm">
           <div className="productFormLeft">
             <label>Product Name</label>
-            <input type="text" placeholder={product.title} />
+            <input
+              type="text"
+              placeholder={product.title}
+              name="title"
+              onChange={handleChange}
+            />
             <label>Product Description</label>
-            <input type="text" placeholder={product.desc} />
+            <input
+              type="text"
+              placeholder={product.desc}
+              name="desc"
+              onChange={handleChange}
+            />
             <label>Price</label>
-            <input type="text" placeholder={product.price} />
+            <input
+              type="number"
+              placeholder={product.price}
+              name="price"
+              onChange={handleChange}
+            />
             <label>In Stock</label>
-            <select name="inStock" id="idStock">
+            <select name="inStock" onChange={handleChange} id="idStock">
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
@@ -110,7 +135,9 @@ export default function Product() {
               </label>
               <input type="file" id="file" style={{ display: "none" }} />
             </div>
-            <button className="productButton">Update</button>
+            <button onClick={handleClick} className="productButton">
+              Update
+            </button>
           </div>
         </form>
       </div>
