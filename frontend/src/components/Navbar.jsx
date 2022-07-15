@@ -78,7 +78,7 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>TANJIL</Logo>
+          <Logo>Life Style</Logo>
         </Center>
         <Right>
           {!user ? (
