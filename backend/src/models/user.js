@@ -8,6 +8,11 @@ const UserSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    fullName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -17,6 +22,24 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    phone: {
+      type: Number,
+      required: true,
+    },
+    img: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    active: {
+      type: Boolean,
+      default: true,
     },
     isAdmin: {
       type: Boolean,

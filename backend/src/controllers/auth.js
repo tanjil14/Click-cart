@@ -1,13 +1,23 @@
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
-const env=require("../config/envConfig")
+const env = require("../config/envConfig");
 const UserModel = require("../models/User.js");
 module.exports.register = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const {
+      username,
+      fullName,
+      email,
+      password,
+      phone,
+      address,
+      gender,
+      active,
+      img,
+    } = req.body;
     const cipherText = CryptoJS.AES.encrypt(
       password,
-     env.JWT_SECRET
+      env.JWT_SECRET
     ).toString();
     const emailExist = await UserModel.findOne({ email });
     if (emailExist) {
@@ -15,8 +25,14 @@ module.exports.register = async (req, res) => {
     } else {
       const response = await UserModel.create({
         username,
+        fullName,
         email,
         password: cipherText,
+        phone,
+        address,
+        gender,
+        active,
+        img,
       });
       return res
         .status(200)

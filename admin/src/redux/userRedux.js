@@ -1,29 +1,86 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userSlice = createSlice({
-  name: "user",
+export const userSlice = createSlice({
+  name: "users",
   initialState: {
-    currentUser: null,
+    users: [],
     isFetching: false,
     error: false,
   },
   reducers: {
-    loginStart: (state) => {
+    //GET ALL
+    getUsersStart: (state) => {
       state.isFetching = true;
+      state.error = false;
     },
-    loginSuccess: (state, action) => {
+    getUsersSuccess: (state, action) => {
       state.isFetching = false;
-      state.currentUser = action.payload;
+      state.users = action.payload;
     },
-    loginFailure: (state) => {
+    getUsersFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
-    logout: (state) => {
-      state.currentUser = null;
+    //DELETE
+    deleteUsersStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    deleteUsersSuccess: (state, action) => {
+      state.isFetching = false;
+      state.users.splice(
+        state.users.findIndex((item) => item._id === action.payload),
+        1
+      );
+    },
+    deleteUsersFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+    //UPDATE
+    updateUsersStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    updateUsersSuccess: (state, action) => {
+      state.isFetching = false;
+      state.users[
+        state.products.findIndex((item) => item._id === action.payload.id)
+      ] = action.payload.product;
+    },
+    updateUsersFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+    //Create
+    addUsersStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    addUsersSuccess: (state, action) => {
+      state.isFetching = false;
+      state.users.push(action.payload);
+    },
+    addUsersFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
     },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
+export const {
+  getUsersStart,
+  getUsersSuccess,
+  getUsersFailure,
+  deleteUsersStart,
+  deleteUsersSuccess,
+  deleteUsersFailure,
+  updateUsersStart,
+  updateUsersSuccess,
+  updateUsersFailure,
+  addUsersStart,
+  addUsersSuccess,
+  addUsersFailure,
+} = userSlice.actions;
+
 export default userSlice.reducer;
