@@ -76,7 +76,7 @@ export default function NewProduct() {
       <h1 className="addProductTitle">New Product</h1>
       <form className="addProductForm">
         <div className="addProductItem">
-          <label>Image</label>
+          <label htmlFor="file">Image</label>
           <input
             type="file"
             id="file"

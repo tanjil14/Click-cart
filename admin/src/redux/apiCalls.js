@@ -15,6 +15,9 @@ import {
   updateProductSuccess,
 } from "./productRedux";
 import {
+  addUsersFailure,
+  addUsersStart,
+  addUsersSuccess,
   deleteUsersFailure,
   deleteUsersStart,
   deleteUsersSuccess,
@@ -104,5 +107,14 @@ export const updateUser = async (id, userDetail, dispatch) => {
     dispatch(updateUsersSuccess(res.data));
   } catch (err) {
     dispatch(updateUsersFailure());
+  }
+};
+export const addUser = async (user, dispatch) => {
+  dispatch(addUsersStart());
+  try {
+    const res = await userRequest.post(`auth/register`, user);
+    dispatch(addUsersSuccess(res.data));
+  } catch (err) {
+    dispatch(addUsersFailure());
   }
 };
