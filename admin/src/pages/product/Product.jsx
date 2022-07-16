@@ -17,7 +17,7 @@ export default function Product() {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  console.log(products)
+  console.log(pStats)
   const product = useSelector((state) =>
     state.product.products.find((product) => product._id === productId)
   );
@@ -62,7 +62,7 @@ export default function Product() {
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.preventDefault();
-    // updateProduct(productId, products, dispatch);
+    updateProduct(productId, products, dispatch);
   };
   return (
     <div className="product">
@@ -78,13 +78,13 @@ export default function Product() {
         </div>
         <div className="productTopRight">
           <div className="productInfoTop">
-            <img src={product.img} alt="" className="productInfoImg" />
-            <span className="productName">{product.title}</span>
+            <img src={product?.img} alt="" className="productInfoImg" />
+            <span className="productName">{product?.title}</span>
           </div>
           <div className="productInfoBottom">
             <div className="productInfoItem">
               <span className="productInfoKey">id:</span>
-              <span className="productInfoValue">{product._id}</span>
+              <span className="productInfoValue">{product?._id}</span>
             </div>
             <div className="productInfoItem">
               <span className="productInfoKey">sales:</span>
@@ -92,7 +92,7 @@ export default function Product() {
             </div>
             <div className="productInfoItem">
               <span className="productInfoKey">in stock:</span>
-              <span className="productInfoValue">{product.inStock}</span>
+              <span className="productInfoValue">{product?.inStock}</span>
             </div>
           </div>
         </div>
@@ -100,37 +100,47 @@ export default function Product() {
       <div className="productBottom">
         <form className="productForm">
           <div className="productFormLeft">
-            <label>Product Name</label>
+            <label htmlFor="title">Product Name</label>
             <input
+            id="title"
               type="text"
-              placeholder={product.title}
+              placeholder={product?.title}
               name="title"
               onChange={handleChange}
             />
-            <label>Product Description</label>
+            <label htmlFor="desc">Product Description</label>
             <input
+            id="desc"
               type="text"
-              placeholder={product.desc}
+              placeholder={product?.desc}
               name="desc"
               onChange={handleChange}
             />
-            <label>Price</label>
+            <label htmlFor="price">Price</label>
             <input
+            id="price"
               type="number"
-              placeholder={product.price}
+              placeholder={product?.price}
               name="price"
               onChange={handleChange}
             />
-            <label>In Stock</label>
-            <select name="inStock" onChange={handleChange} id="idStock">
+            <label htmlFor="idStock">In Stock</label>
+            <select  name="inStock" onChange={handleChange} id="idStock">
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
           </div>
           <div className="productFormRight">
             <div className="productUpload">
-              <img src={product.img} alt="" className="productUploadImg" />
-              <label for="file">
+              <img
+                src={
+                  product?.img ||
+                  "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
+                }
+                alt=""
+                className="productUploadImg"
+              />
+              <label htmlFor="file">
                 <Publish />
               </label>
               <input type="file" id="file" style={{ display: "none" }} />

@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 `;
-const Products = ({ cat, filters, sort }) => {
+const Products = ({ cat, filters, sort, showAll }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   useEffect(() => {
@@ -55,6 +55,8 @@ const Products = ({ cat, filters, sort }) => {
     <Container>
       {cat
         ? filteredProducts.map((item) => <Product key={item._id} item={item} />)
+        : showAll
+        ? products.map((item) => <Product key={item._id} item={item} />)
         : products
             .slice(0, 8)
             .map((item) => <Product key={item._id} item={item} />)}
