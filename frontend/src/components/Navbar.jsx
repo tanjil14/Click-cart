@@ -65,7 +65,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
   const logout = () => {
-    dispatch(logOut())
+    dispatch(logOut());
   };
   return (
     <Container>
@@ -81,6 +81,9 @@ const Navbar = () => {
           <Logo>Life Style</Logo>
         </Center>
         <Right>
+          <Link to="/products">
+            <MenuItem>Products</MenuItem>
+          </Link>
           {!user ? (
             <Link to="login">
               <MenuItem>SIGN IN</MenuItem>
