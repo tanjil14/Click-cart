@@ -55,7 +55,7 @@ export default function NewUser() {
             gender,
           };
           addUser(user, dispatch);
-          history.push("/users");
+          history.push("/");
         });
       }
     );
