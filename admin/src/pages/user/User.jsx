@@ -1,20 +1,35 @@
 import {
   LocationSearching,
   MailOutline,
-  PhoneAndroid,
-  Publish,
+  PhoneAndroid
 } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { updateUser } from "../../redux/apiCalls";
 import "./user.css";
 
 export default function User() {
   const location = useLocation();
   const userId = location.pathname.split("/")[2];
+  const dispatch = useDispatch();
+  const [users, setUsers] = useState({});
+  const handleChange = (e) => {
+    setUsers((prev) => {
+      return {
+        ...prev,
+        [e.target.id]: e.target.value,
+      };
+    });
+  };
+  const handleClick = (e) => {
+    e.preventDefault();
+    updateUser(userId, users, dispatch);
+    alert("User update Successfully!")
+  };
   const user = useSelector((state) =>
     state.users.users.find((user) => user._id === userId)
   );
-  console.log(user);
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -75,15 +90,17 @@ export default function User() {
                   type="text"
                   placeholder={user.username}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
-                <label htmlFor="name">Full Name</label>
+                <label htmlFor="fullName">Full Name</label>
                 <input
-                  id="name"
+                  id="fullName"
                   type="text"
                   placeholder={user.fullName}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
@@ -93,27 +110,32 @@ export default function User() {
                   type="email"
                   placeholder={user.email}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
                 <label htmlFor="phone">Phone</label>
                 <input
-                id="phone"
+                  id="phone"
                   type="text"
                   placeholder={user?.phone}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
               <div className="userUpdateItem">
                 <label htmlFor="address">Address</label>
                 <input
-                id="address"
+                  id="address"
                   type="text"
                   placeholder={user?.address}
                   className="userUpdateInput"
+                  onChange={handleChange}
                 />
               </div>
-              <button className="userUpdateButton">Update</button>
+              <button onClick={handleClick} className="userUpdateButton">
+                Update
+              </button>
             </div>
             {/* <div className="userUpdateRight">
               <div className="userUpdateUpload">
@@ -129,7 +151,6 @@ export default function User() {
               </div>
               <button className="userUpdateButton">Update</button>
             </div> */}
-            
           </form>
         </div>
       </div>
