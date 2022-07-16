@@ -1,15 +1,20 @@
 import {
-  CalendarToday,
   LocationSearching,
   MailOutline,
-  PermIdentity,
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 import "./user.css";
 
 export default function User() {
+  const location = useLocation();
+  const userId = location.pathname.split("/")[2];
+  const user = useSelector((state) =>
+    state.users.users.find((user) => user._id === userId)
+  );
+  console.log(user);
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -22,17 +27,20 @@ export default function User() {
         <div className="userShow">
           <div className="userShowTop">
             <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+              src={
+                user?.img ||
+                "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"
+              }
               alt=""
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">Anna Becker</span>
-              <span className="userShowUserTitle">Software Engineer</span>
+              <span className="userShowUsername">{user?.fullName}</span>
+              {/* <span className="userShowUserTitle">Software Engineer</span> */}
             </div>
           </div>
           <div className="userShowBottom">
-            <span className="userShowTitle">Account Details</span>
+            {/* <span className="userShowTitle">Account Details</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
               <span className="userShowInfoTitle">annabeck99</span>
@@ -40,19 +48,19 @@ export default function User() {
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
               <span className="userShowInfoTitle">10.12.1999</span>
-            </div>
+            </div> */}
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
               <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+1 123 456 67</span>
+              <span className="userShowInfoTitle">{user?.phone}</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
-              <span className="userShowInfoTitle">annabeck99@gmail.com</span>
+              <span className="userShowInfoTitle">{user?.email}</span>
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">New York | USA</span>
+              <span className="userShowInfoTitle">{user?.address}</span>
             </div>
           </div>
         </div>
@@ -61,47 +69,53 @@ export default function User() {
           <form className="userUpdateForm">
             <div className="userUpdateLeft">
               <div className="userUpdateItem">
-                <label>Username</label>
+                <label htmlFor="username">Username</label>
                 <input
+                  id="username"
                   type="text"
-                  placeholder="annabeck99"
+                  placeholder={user.username}
                   className="userUpdateInput"
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Full Name</label>
+                <label htmlFor="name">Full Name</label>
                 <input
+                  id="name"
                   type="text"
-                  placeholder="Anna Becker"
+                  placeholder={user.fullName}
                   className="userUpdateInput"
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Email</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="text"
-                  placeholder="annabeck99@gmail.com"
+                  id="email"
+                  type="email"
+                  placeholder={user.email}
                   className="userUpdateInput"
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Phone</label>
+                <label htmlFor="phone">Phone</label>
                 <input
+                id="phone"
                   type="text"
-                  placeholder="+1 123 456 67"
+                  placeholder={user?.phone}
                   className="userUpdateInput"
                 />
               </div>
               <div className="userUpdateItem">
-                <label>Address</label>
+                <label htmlFor="address">Address</label>
                 <input
+                id="address"
                   type="text"
-                  placeholder="New York | USA"
+                  placeholder={user?.address}
                   className="userUpdateInput"
                 />
               </div>
+              <button className="userUpdateButton">Update</button>
             </div>
-            <div className="userUpdateRight">
+            {/* <div className="userUpdateRight">
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
@@ -114,7 +128,8 @@ export default function User() {
                 <input type="file" id="file" style={{ display: "none" }} />
               </div>
               <button className="userUpdateButton">Update</button>
-            </div>
+            </div> */}
+            
           </form>
         </div>
       </div>

@@ -9,7 +9,6 @@ import "./userList.css";
 export default function UserList() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.users);
-  console.log(users);
   const handleDelete = (id) => {
     deleteUsers(id, dispatch);
   };
