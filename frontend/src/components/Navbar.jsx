@@ -90,6 +90,7 @@ const Navbar = () => {
             </Link>
           ) : (
             <MenuItem onClick={logout}>Logout</MenuItem>
+            //logout
           )}
           {/* <MenuItem>REGISTER</MenuItem> */}
 
